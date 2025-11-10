@@ -1,12 +1,15 @@
 import AppLayout from '@/layouts/app-layout'
 import { BreadcrumbItem } from '@/types'
 import React, { useEffect, useState } from 'react'
-import { Button, Drawer, Input, Popconfirm, Table, type TableProps } from 'antd';
+import { Button, Drawer, Input, message, Popconfirm, Table, type TableProps } from 'antd';
 import { Product } from '@/types/product';
 import { Edit, KeyRound, Plus, PlusIcon, Trash2Icon } from 'lucide-react';
 import ProductForm from './product-form';
+import { router } from '@inertiajs/react';
 
 function ProductDashboard({products}: {products: Product[]}) {
+
+    const [messageApi, contextHolder] = message.useMessage();
 
     const breadcrumbs: BreadcrumbItem[] = [{title: 'Products', href: 'products/index'}];
 
@@ -36,11 +39,31 @@ function ProductDashboard({products}: {products: Product[]}) {
         setDrawerOpen(true);
     }
 
+    const deleteProduct = (id: number) => {
+        try {
+            router.delete(`product/delete/${id}`, {
+                preserveScroll: true,
+                onSuccess: (data: any) => {
+                    messageApi.success('Successfully Deleted');
+                },
+                onError: (errors: any) => {
+                    messageApi.error('Failed - ' + errors[0]);
+                },
+            });
+        } catch (error) {
+            messageApi.error('Please fix the validation errors. ' + error);
+        }
+    }
+
     useEffect(() => {
         if(!drawerOpen){
             setSelectedProduct(undefined);
         }
     }, [drawerOpen]);
+
+    useEffect(() => {
+        setFilteredProducts(products);
+    }, [products])
 
     const columns: TableProps['columns'] = [
         {
@@ -80,7 +103,7 @@ function ProductDashboard({products}: {products: Product[]}) {
                     />
                     <Popconfirm
                         title='Are Your Sure to delete ? '
-                        onConfirm={() => {}}
+                        onConfirm={() => {deleteProduct(id)}}
                         okType='danger'
                         okText='Delete'
                     >
@@ -128,6 +151,7 @@ function ProductDashboard({products}: {products: Product[]}) {
                 </div>
 
             </div>
+            {contextHolder}
         </AppLayout>        
     )
 }

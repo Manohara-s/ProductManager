@@ -26,6 +26,7 @@ Route::middleware(['auth', 'verified'])->prefix('product/')->group(function () {
     Route::get('index', [ProductController::class, 'index'])->name('product.index');
     Route::post('store', [ProductController::class, 'store'])->name('product.store');
     Route::post('update', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('delete/{product}', [ProductController::class, 'destroy'])->name('product.delete');
 });
 
 require __DIR__.'/settings.php';

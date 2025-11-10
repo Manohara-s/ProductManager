@@ -73,6 +73,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        try{
+            ProductService::deleteProduct($product);
+        }catch(Exception $ex){
+            self::returnError($ex);
+        }
     }
 }

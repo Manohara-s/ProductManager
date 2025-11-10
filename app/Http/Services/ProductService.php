@@ -58,4 +58,8 @@ class ProductService extends Service {
         return $product;
     }
 
+    public static function deleteProduct(Product $product) {
+        $product->delete();
+    }
+
 }
