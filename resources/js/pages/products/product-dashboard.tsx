@@ -1,9 +1,10 @@
 import AppLayout from '@/layouts/app-layout'
 import { BreadcrumbItem } from '@/types'
 import React from 'react'
-import { Button, Input, Table, type TableProps } from 'antd';
+import { Button, Drawer, Input, Table, type TableProps } from 'antd';
 import { Product } from '@/types/product';
 import { Plus, PlusIcon } from 'lucide-react';
+import ProductForm from './product-form';
 
 function ProductDashboard({products}: {products: Product[]}) {
 
@@ -65,6 +66,16 @@ function ProductDashboard({products}: {products: Product[]}) {
                         />
                     </div>
                 </div>
+
+                <div>
+                    <Drawer
+                        open={true}
+                        width={800}
+                    >
+                        <ProductForm />
+                    </Drawer>
+                </div>
+
             </div>
         </AppLayout>        
     )
