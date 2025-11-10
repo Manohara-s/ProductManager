@@ -21,6 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'verified'])->prefix('product/')->group(function () {
     Route::get('index', [ProductController::class, 'index'])->name('product.index');
     Route::post('store', [ProductController::class, 'store'])->name('product.store');
+    Route::post('update', [ProductController::class, 'update'])->name('product.update');
 });
 
 require __DIR__.'/settings.php';

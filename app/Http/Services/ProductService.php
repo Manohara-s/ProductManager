@@ -15,6 +15,11 @@ class ProductService extends Service {
         'qty' => 'required|numeric'
     ];
 
+
+    public static function getProducts(){
+        return Product::all();
+    }
+
     public static function storeProduct(Request $request) {
 
         $request->validate(self::$validator);
@@ -32,6 +37,25 @@ class ProductService extends Service {
 
         return $product;
 
+    }
+
+    public static function updateProduct(Request $request){
+        $request->validate(self::$validator);
+
+        $product = Product::findOrFail($request->id);
+
+        // if($product->isEmpty()){
+        //     throw new Exception('Unable to find Product');
+        // }
+
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->qty = $request->qty;
+
+        $product->update();
+
+        return $product;
     }
 
 }

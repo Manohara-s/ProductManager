@@ -14,7 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return inertia('products/product-dashboard', []);
+        $products = ProductService::getProducts();
+        return inertia('products/product-dashboard', ['products' => $products]);
     }
 
     /**
@@ -32,6 +33,7 @@ class ProductController extends Controller
     {
         try{
             $product = ProductService::storeProduct($request);
+            return self::returnSuccess();
         }catch(Exception $ex){
             return self::returnError($ex);
         }
@@ -56,9 +58,14 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request)
     {
-        //
+        try{
+            $product = ProductService::updateProduct($request);
+            return self::returnSuccess();
+        }catch(Exception $ex){
+            self::returnError($ex);
+        }
     }
 
     /**
