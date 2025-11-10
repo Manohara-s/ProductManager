@@ -11,10 +11,14 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+// Route::get('/', [ProductController::class, 'index'])->name('product.index');
+
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    // Route::get('dashboard', function () {
+    //     return Inertia::render('dashboard');
+    // })->name('dashboard');
+    Route::get('dashboard', [ProductController::class, 'index'])->name('dashboard');
+
 });
 
 //Product Module
