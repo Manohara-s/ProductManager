@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\ProductService;
 use App\Models\Product;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -28,7 +30,11 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $product = ProductService::storeProduct($request);
+        }catch(Exception $ex){
+            return self::returnError($ex);
+        }
     }
 
     /**

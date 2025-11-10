@@ -16,9 +16,9 @@ function ProductForm({product}: {product?: Product}) {
         try {
             const values = await form.validateFields();
 
-            const storeRoute = (isNew) ? 'customer.subscribed.store' : 'customer.subscribed.update';
+            const storeUrl = (isNew) ? '/product/store' : '/product/update';
 
-            router.post((storeRoute), values, {
+            router.post(storeUrl, values, {
                 preserveScroll: true,
                 onSuccess: (data: any) => {
                     messageApi.success('Successfully Saved');
