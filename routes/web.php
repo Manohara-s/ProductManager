@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -14,6 +15,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+});
+
+//Product Module
+Route::middleware(['auth', 'verified'])->prefix('product/')->group(function () {
+    Route::get('index', [ProductController::class, 'index'])->name('product.index');
 });
 
 require __DIR__.'/settings.php';
